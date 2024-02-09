@@ -23,6 +23,17 @@ if (!elem) {
 }
 ```
 
+#### Capitalize
+
+```JavaScript
+const capitalize = (str) => {
+  if (!str) {
+    return str;
+  }
+  return str.charAt(0).toUpperCase() + str.toLowerCase().slice(1);
+};
+```
+
 #### Utils
 
 - [sha256](./Utils/sha256.md)
