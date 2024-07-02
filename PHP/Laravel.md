@@ -12,3 +12,36 @@ $counter = 0;
 ```
 
 keywords: laravel, query, queries, count, counter
+
+#### List / Remove Duplicated object collection / Databse entry through model
+
+```PHP
+use Illuminate\Database\Eloquent\Collection;
+
+function removeDuplicates(Collection $models, array $attributes): Collection {
+    $seen = [];
+    return $models->filter(function($model) use (&$seen, $attributes) {
+        $compositeKey = [];
+        foreach ($attributes as $attribute) {
+            $compositeKey[] = $model->{$attribute};
+        }
+        $compositeKey = implode('-', $compositeKey);
+
+        if (in_array($compositeKey, $seen)) {
+            // TODO: Perform specific action if required
+            // $model->delete();
+            return false;
+        } else {
+            $seen[] = $compositeKey;
+            return true;
+        }
+    });
+}
+
+// Usage
+$movies = Movie::all();
+$uniqueMovies = removeDuplicates($prices, ['name', 'publication_date', '...']);
+
+```
+
+keywords: laravel, delete, remove, duplicates, models, entry, database
